@@ -1,0 +1,17 @@
+<h2>All Bookings</h2>
+<table border="1">
+  <tr>
+    <th>User</th>
+    <th>Show</th>
+    <th>Quantity</th>
+    <th>Booked At</th>
+  </tr>
+  {% for booking in bookings %}
+  <tr>
+    <td>{{ booking.user.username }}</td>
+    <td>{{ booking.show.title }}</td>
+    <td>{{ booking.quantity }}</td>
+    <td>{{ booking.booked_at }}</td>
+  </tr>
+  {% endfor %}
+</table>

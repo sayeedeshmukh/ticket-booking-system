@@ -46,3 +46,9 @@ class DeleteShowView(View):
         show = Show.objects.get(pk=pk)
         show.delete()
         return redirect('home')
+
+@method_decorator(login_required, name='dispatch')
+class ViewAllBookings(View):
+    def get(self, request):
+        bookings = Booking.objects.select_related('user', 'show').all()
+        return render(request, 'adminpanel/all_bookings.html', {'bookings': bookings})

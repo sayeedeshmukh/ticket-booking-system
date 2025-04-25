@@ -31,3 +31,10 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('login')
+
+from .models import Show
+
+class HomeView(View):
+    def get(self, request):
+        shows = Show.objects.all()
+        return render(request, 'home.html', {'shows': shows})

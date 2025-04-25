@@ -35,3 +35,14 @@ class EditShowView(View):
         show.seats = request.POST['seats']
         show.save()
         return redirect('home')
+
+@method_decorator(login_required, name='dispatch')
+class DeleteShowView(View):
+    def get(self, request, pk):
+        show = Show.objects.get(pk=pk)
+        return render(request, 'adminpanel/delete_show.html', {'show': show})
+    
+    def post(self, request, pk):
+        show = Show.objects.get(pk=pk)
+        show.delete()
+        return redirect('home')

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Shows | Ticket Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3f51b5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .show-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .show-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .show-details {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #3f51b5;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #303f9f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎭 Available Shows</h1>
+    </header>
+
+    <main>
+        {% if shows %}
+            {% for show in shows %}
+                <div class="show-card">
+                    <div class="show-title">{{ show.title }}</div>
+                    <div class="show-details">
+                        <p><strong>Date:</strong> {{ show.date }}</p>
+                        <p><strong>Time:</strong> {{ show.time }}</p>
+                        <p><strong>Venue:</strong> {{ show.venue }}</p>
+                        <p><strong>Description:</strong> {{ show.description }}</p>
+                        <a href="{% url 'book-show' show.id %}" class="btn">Book Now</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No shows available at the moment. Please check back later!</p>
+        {% endif %}
+    </main>
+</body>
+</html>

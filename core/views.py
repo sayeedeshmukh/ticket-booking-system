@@ -38,3 +38,16 @@ class HomeView(View):
     def get(self, request):
         shows = Show.objects.all()
         return render(request, 'home.html', {'shows': shows})
+
+class ShowDetailView(View):
+    def get(self, request, pk):
+        show = Show.objects.get(pk=pk)
+        return render(request, 'show_detail.html', {'show': show})
+    
+    def post(self, request, pk):
+        quantity = int(request.POST['quantity'])
+        show = Show.objects.get(pk=pk)
+        cart = request.session.get('cart', [])
+        cart.append({'show_id': show.id, 'title': show.title, 'quantity': quantity})
+        request.session['cart'] = cart
+        return redirect('view_cart')

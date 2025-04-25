@@ -1,0 +1,6 @@
+<form method="post">
+    {% csrf_token %}
+    <input type="number" name="quantity" min="1" max="{{ show.seats }}">
+    <button type="submit">Book</button>
+  </form>
+  

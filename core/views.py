@@ -51,3 +51,22 @@ class ShowDetailView(View):
         cart.append({'show_id': show.id, 'title': show.title, 'quantity': quantity})
         request.session['cart'] = cart
         return redirect('view_cart')
+
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views import View
+from .models import Show, Booking
+from django.shortcuts import render, redirect
+
+@method_decorator(login_required, name='dispatch')
+class AddShowView(View):
+    def get(self, request):
+        return render(request, 'adminpanel/add_show.html')
+    
+    def post(self, request):
+        title = request.POST['title']
+        date = request.POST['date']
+        time = request.POST['time']
+        seats = request.POST['seats']
+        Show.objects.create(title=title, date=date, time=time, seats=seats)
+        return redirect('home') 

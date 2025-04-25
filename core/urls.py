@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterView, LoginView, LogoutView,HomeView,ShowDetailView
+from .views import RegisterView, LoginView, LogoutView,HomeView,ShowDetailView,AddShowView
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
@@ -7,6 +7,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('', HomeView.as_view(), name='home'),
     path('show/<int:pk>/', ShowDetailView.as_view(), name='show_detail'),
+    path('admin/add-show/', AddShowView.as_view(), name='add_show'),
+
 
 
 ]

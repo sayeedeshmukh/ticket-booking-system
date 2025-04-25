@@ -1,4 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.shortcuts import render, redirect
+
 
 class Show(models.Model):
     title = models.CharField(max_length=200)
@@ -14,3 +20,18 @@ class Booking(models.Model):
     show = models.ForeignKey(Show, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     booked_at = models.DateTimeField(auto_now_add=True)
+
+@method_decorator(login_required, name='dispatch')
+class EditShowView(View):
+    def get(self, request, pk):
+        show = Show.objects.get(pk=pk)
+        return render(request, 'core/edit_show.html', {'show': show})
+    
+    def post(self, request, pk):
+        show = Show.objects.get(pk=pk)
+        show.title = request.POST['title']
+        show.date = request.POST['date']
+        show.time = request.POST['time']
+        show.seats = request.POST['seats']
+        show.save()
+        return redirect('home')
